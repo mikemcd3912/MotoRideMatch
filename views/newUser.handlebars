@@ -1,0 +1,29 @@
+<h2><center>Create an Account</center></h2>         
+<center>
+<div class="container" width="50%" >
+  <div class="row">
+  </div>
+  </br>
+<span class="border border-light">
+<div class = "loginForm">
+    <h4>Welcome!</h4>
+    </br>
+    </br>
+
+    <h5>{{{message}}}</h5>
+    <form action="/newUser" method="POST">
+        <input type="text" name="user_Name" placeholder="User Name" size="20" required></br>
+        <input type="password" name="password" placeholder="Password" size="20" required></br>
+        <input type="password" name="confirmpassword" placeholder="Confirm Password" size="20" required></br>
+        <input type="text" name="first_name" placeholder="First Name" size="20" required></br>
+        <input type="text" name="last_name" placeholder="Last Name" size="20" required></br>
+        <input type="date" name="dob" placeholder="dob" size="20" required></br>
+        <input type="text" name="email" placeholder="email" size="20" required></br>
+        <input type="text" name="city" placeholder="city" size="20" required></br>
+        <input type="text" name="state" placeholder="state" size="20" required></br>
+        <input type="text" name="zip" placeholder="zip" size="20" required></br>
+        <input type ="submit">
+    </form>
+</div>
+</center>
+

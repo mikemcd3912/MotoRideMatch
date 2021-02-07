@@ -1,0 +1,636 @@
+<h4><center>This is the Admin page that allows administrators to easily manage all the tables used in the application</center></h4>
+</br>
+<h3><center><u>Select a table to view or modify</u></center></h3>
+</br>
+
+<!--Display Rider Table-->
+<div class="accordion-custom">
+  <div id="accordion" class="accordion">
+    <center>
+      <button class="btn btn-outline-dark btn-lg" data-toggle="collapse" href="#Riders">
+         Riders
+      </button>
+      <button class="btn btn-outline-dark btn-lg" data-toggle="collapse" href="#Garages">
+        Garages
+      </button>
+      <button class="btn btn-outline-dark btn-lg" data-toggle="collapse" href="#Bikes">
+        Bikes
+      </button>
+      <button class="btn btn-outline-dark btn-lg" data-toggle="collapse" href="#Routes">
+        Routes
+      </button>
+      <button class="btn btn-outline-dark btn-lg" data-toggle="collapse" href="#Tours">
+        Tours
+      </button>
+       <button class="btn btn-outline-dark btn-lg" data-toggle="collapse" href="#Terrains">
+         Terrains
+      </button>
+    </center>
+  <div id="Riders" class="collapse" data-parent="#accordion">
+    <div class="card-body">
+      <div class="custom-repo">
+        <h2><center>Riders</center></h2>                                           
+      <div class="container" width="100%" >
+        <div class="row">
+        </div>
+        </br>
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">rider_ID</th>
+            <th scope="col">user_Name</th>
+            <th scope="col">first_name</th>
+            <th scope="col">last_name</th>
+            <th scope="col">dob</th>
+            <th scope="col">email</th>
+            <th scope="col">city</th>
+            <th scope="col">state</th>
+            <th scope="col">zip</th>
+            <th scope="col">Action</th>
+            <th scope="col"></th>
+          </tr>
+          </thead>
+            <tbody>
+              {{#each Riders}}
+              <tr>
+                <!--Display info-->
+                  <td>{{this.rider_ID}}</td>
+                  <td>{{this.user_Name}}</td>
+                  <td>{{this.first_Name}}</td>
+                  <td>{{this.last_Name}}</td>
+                  <td>{{this.dob}}</td>
+                  <td>{{this.email}}</td>
+                  <td>{{this.city}}</td>
+                  <td>{{this.state}}</td>
+                  <td>{{this.zip}}</td>
+                  <!--Update Form-->
+                  <td><button href="#Riders{{this.rider_ID}}" data-toggle="modal" class="btn btn-outline-dark btn-small">Update</button></td>
+                  <div class="modal" id="Riders{{this.rider_ID}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Update Rider</h5>
+                        </div>
+                        <div class="modal-body">
+                        <div class="container" width="50%">
+                  <form id="update{{this.rider_ID}}" action="/update" method="POST">
+                      <div class="form-group row">
+                              <input type="hidden" class="form-control" name="table" readonly="readonly" value="Riders">
+                              <input type="hidden" class="form-control" name="id" readonly="readonly" value={{this.rider_ID}}>
+                              <div scope='col' >First Name<input type="text" class="form-control" name="first_name" value={{this.first_Name}} size="10" ></div>
+                              <div scope='col'>Last Name<input type="text" class="form-control" name="last_name" value={{this.last_Name}} size="10" ></div>
+                              <div scope='col'>Date of Birth<input type="date" class="form-control" name="dob" value={{this.dob}} size="10" required></div>
+                              <div scope='col'>Email<input type="text" class="form-control" name="email" value={{this.email}} size="10" ></div>
+                              <div scope='col'>City<input type="text" class="form-control" name="city" value={{this.city}} size="10" ></div>
+                              <div scope='col'>State<input type="text" class="form-control" name="state" value={{this.state}} size="10" ></div>
+                              <div scope='col'>Zip<input type="text" class="form-control" name="zip" value={{this.zip}} size="10" ></div>
+                      </div>
+                  </form>
+                  </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button form="update{{this.rider_ID}}" type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--Delete Form-->
+                  <td><form action= "/adminDelete" method='POST'>
+                      <input type="hidden" value="Riders" name="table">
+                      <input type="hidden" value="rider_ID" name="field">
+                      <input type="hidden" value={{this.rider_ID}} name="id">
+                      <button type="submit" class="btn btn-outline-dark btn-small">Delete</button></form></td>
+              </tr>
+              {{/each}}
+          </tbody>
+        </table>
+          <center>
+            <button href="#insertRider" data-toggle="modal" class="btn btn-outline-dark btn-small">Insert</button>
+          </center>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--Insert Rider Modal-->
+<div class="modal" id="insertRider" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Insert Rider</h5>
+      </div>
+      <div class="modal-body">
+       <div class="container" width="50%">
+<form id="addRider" action="/addRider" method="POST">
+    <div class="form-group row">
+            <div scope='col'><input type="text" class="form-control" name="user_Name" placeholder="User Name" size="10" required></div>
+            <div scope='col'><input type="text" class="form-control" name="password" placeholder="Password" size="10" required></div>
+            <div scope='col'><input type="text" class="form-control" name="first_name" placeholder="First Name" size="10" required></div>
+            <div scope='col'><input type="text" class="form-control" name="last_name" placeholder="Last Name" size="10" required></div>
+            <div scope='col'><input type="date" class="form-control" name="dob" placeholder="dob" size="10" required></div>
+            <div scope='col'><input type="text" class="form-control" name="email" placeholder="email" size="10" required></div>
+            <div scope='col'><input type="text" class="form-control" name="city" placeholder="city" size="10" required></div>
+            <div scope='col'><input type="text" class="form-control" name="state" placeholder="state" size="10" required></div>
+            <div scope='col'><input type="text" class="form-control" name="zip" placeholder="zip" size="10" required></div>
+    </div>
+</form>
+</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button form="addRider" type="submit" class="btn btn-primary">Insert</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Update Rider Modal-->
+<div class="modal" id="editRider" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Rider</h5>
+      </div>
+      <div class="modal-body">
+       <div class="container" width="50%">
+<form action="/update" method="POST">
+    <div class="form-group row">
+            <input type="hidden" class="form-control" name="table" readonly="readonly" value="Riders">
+            <div scope='col' ><input type="text" class="form-control" name="first_name" placeholder="First Name" size="10" required></div>
+            <div scope='col'><input type="text" class="form-control" name="last_name" placeholder="Last Name" size="10" required></div>
+            <div scope='col'><input type="text" class="form-control" name="dob" placeholder="dob" size="10" required></div>
+            <div scope='col'><input type="text" class="form-control" name="email" placeholder="email" size="10" required></div>
+            <div scope='col'><input type="text" class="form-control" name="city" placeholder="city" size="10" required></div>
+            <div scope='col'><input type="text" class="form-control" name="state" placeholder="state" size="10" required></div>
+            <div scope='col'><input type="text" class="form-control" name="zip" placeholder="zip" size="10" required></div>
+    </div>
+</form>
+</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!--Display Garages Table-->
+  <div id="Garages" class="collapse" data-parent="#accordion">
+    <div class="card-body">
+      <div class="custom-repo">
+        <h2><center>Garages</center></h2>                                           
+      <div class="container" width="100%" >
+        <div class="row">
+        </div>
+        </br>
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">bike_PIN</th>
+            <th scope="col">bike</th>
+            <th scope="col">rider</th>
+            <th scope="col">Action</th>
+            <th scope="col"></th>
+          </tr>
+          </thead>
+            <tbody>
+              {{#each Garage}}
+              <tr>
+                  <td>{{this.bike_PIN}}</td>
+                  <td>{{this.bike}}</td>
+                  <td>{{this.rider}}</td>
+                  <!--Update Form-->
+                  <td><button href="#Garage{{this.bike_PIN}}" data-toggle="modal" class="btn btn-outline-dark btn-small">Update</button></td>
+                  <div class="modal" id="Garage{{this.bike_PIN}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Update Garage</h5>
+                        </div>
+                        <div class="modal-body">
+                        <div class="container" width="50%">
+                  <form id="updateGarage{{this.bike_PIN}}" action="/update" method="POST">
+                      <div class="form-group row">
+                              <input type="hidden" class="form-control" name="table" readonly="readonly" value="Garage">
+                              <input type="hidden" class="form-control" name="bike_PIN" readonly="readonly" value={{this.bike_PIN}}>
+                              <div scope='col'>Bike ID<input type="number" class="form-control" name="bike" value={{this.bike}} size="10" ></div>
+                              <div scope='col'>Rider ID<input type="number" class="form-control" name="rider" value={{this.rider}} size="10" ></div>
+                      </div>
+                  </form>
+                  </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button form="updateGarage{{this.bike_PIN}}" type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--Delete Form-->
+                  <td><form action= "/adminDelete" method='POST'>
+                      <input type="hidden" value="Garage" name="table">
+                      <input type="hidden" value="bike_PIN" name="field">
+                      <input type="hidden" value={{this.bike_PIN}} name="id">
+                      <button type="submit" class="btn btn-outline-dark btn-small">Delete</button></form></td>
+              </tr>
+              {{/each}}
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--Display Bikes Table-->      
+  <div id="Bikes" class="collapse" data-parent="#accordion">
+    <div class="card-body">
+      <div class="custom-repo">
+        <h2><center>Bikes</center></h2>                                           
+      <div class="container" width="100%" >
+        <div class="row">
+        </div>
+        </br>
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">bike_ID</th>
+            <th scope="col">make</th>
+            <th scope="col">model</th>
+            <th scope="col">year</th>
+            <th scope="col">Action</th>
+            <th scope="col"></th>
+          </tr>
+          </thead>
+           <tbody>
+              {{#Bikes}}
+              <tr>
+                  <td>{{this.bike_ID}}</td>
+                  <td>{{this.make}}</td>
+                  <td>{{this.model}}</td>
+                  <td>{{this.year}}</td>
+                  <!--Update Form-->
+                  <td><button href="#Bikes{{this.bike_ID}}" data-toggle="modal" class="btn btn-outline-dark btn-small">Update</button></td>
+                  <div class="modal" id="Bikes{{this.bike_ID}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Update Bike</h5>
+                        </div>
+                        <div class="modal-body">
+                        <div class="container" width="50%">
+                  <form id="updateBike{{this.bike_ID}}" action="/update" method="POST">
+                      <div class="form-group row">
+                              <input type="hidden" class="form-control" name="table" readonly="readonly" value="Bikes">
+                              <input type="hidden" class="form-control" name="id" readonly="readonly" value={{this.bike_ID}}>
+                              <div scope='col' >Make<input type="text" class="form-control" name="make" value={{this.make}} size="10" ></div>
+                              <div scope='col'>Model<input type="text" class="form-control" name="model" value={{this.model}} size="10" ></div>
+                              <div scope='col'>Year<input type="number" class="form-control" name="year" value={{this.year}} size="10" ></div>
+                      </div>
+                  </form>
+                  </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button form="updateBike{{this.bike_ID}}" type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--Delete Form-->
+                  <td><form action= "/adminDelete" method='POST'>
+                      <input type="hidden" value="Bikes" name="table">
+                      <input type="hidden" value="bike_ID" name="field">
+                      <input type="hidden" value={{this.bike_ID}} name="id">
+                      <button type="submit" class="btn btn-outline-dark btn-small">Delete</button></form></td>
+              </tr>
+              {{/Bikes}}
+          </tbody>
+        </table>
+          <center>
+            <button href="#insertBike" data-toggle="modal" class="btn btn-outline-dark btn-small">Insert</button>
+          </center>
+        </div>
+      </div>
+    </div>
+  </div>
+      
+<!--Insert Bike Modal-->
+<div class="modal" id="insertBike" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Insert Bike</h5>
+      </div>
+      <div class="modal-body">
+       <div class="container" width="50%">
+<form id="addBike" action= "/addBike" method="POST">
+    <div class="form-group row">
+            <div scope='col'><input type="text" class="form-control" name="make" placeholder="Make" size="10" required></div>
+            <div scope='col'><input type="text" class="form-control" name="model" placeholder="Model" size="10" required></div>
+            <div scope='col'><input type="number" class="form-control" name="year" placeholder="Year" size="10" required></div>
+    </div>
+</form>
+</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button form="addBike" type="submit" class="btn btn-primary">Insert</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!--Display Routes Table-->    
+  <div id="Routes" class="collapse" data-parent="#accordion">
+    <div class="card-body">
+      <div class="custom-repo">
+        <h2><center>Routes</center></h2>                                           
+      <div class="container" width="100%" >
+        <div class="row">
+        </div>
+        </br>
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">route_ID</th>
+            <th scope="col">route_Name</th>
+            <th scope="col">terrain</th>
+            <th scope="col">miles</th>
+            <th scope="col">difficulty</th>
+            <th scope="col">location</th>
+            <th scope="col">Action</th>
+            <th scope="col"></th>
+          </tr>
+          </thead>
+               <tbody>
+              {{#each Routes}}
+              <tr>
+                  <td>{{this.route_ID}}</td>
+                  <td>{{this.route_Name}}</td>
+                  <td>{{this.terrain}}</td>
+                  <td>{{this.miles}}</td>
+                  <td>{{this.difficulty}}</td>
+                  <td>{{this.location}}</td>
+                  <!--Update Form-->
+                  <td><button href="#Routes{{this.route_ID}}" data-toggle="modal" class="btn btn-outline-dark btn-small">Update</button></td>
+                  <div class="modal" id="Routes{{this.route_ID}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Update Route</h5>
+                        </div>
+                        <div class="modal-body">
+                        <div class="container" width="50%">
+                  <form id="updateRoute{{this.route_ID}}" action="/update" method="POST">
+                      <div class="form-group row">
+                              <input type="hidden" class="form-control" name="table" readonly="readonly" value="Routes">
+                              <input type="hidden" class="form-control" name="route_ID" readonly="readonly" value={{this.route_ID}}>
+                              <div scope='col'>Route Name<input type="text" class="form-control" name="route_Name" value={{this.route_Name}} size="10" ></div>
+                              <div scope='col'>Terrain ID<input type="number" class="form-control" name="terrain" value={{this.terrain}} size="10" ></div>
+                              <div scope='col'>Miles<input type="number" class="form-control" name="miles" value={{this.miles}} size="10" ></div>
+                              <div ID="Terrain_Type" class="dropdown"> Terrain Type
+                                <select name="difficulty" class="form-control">
+                                  <option value="Easy" class="dropdown-item">Easy</option>
+                                  <option value="Intermediate" class="dropdown-item">Intermediate</option>
+                                  <option value="Hard" class="dropdown-item">Hard</option>
+                                  <option value="Extreme" class="dropdown-item">Extreme</option>
+                                </select>
+                              </div>
+                              <div scope='col'>Location<input type="text" class="form-control" name="location" value={{this.location}} size="10" ></div>
+                      </div>
+                  </form>
+                  </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button form="updateRoute{{this.route_ID}}" type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--Delete Form-->
+                  <td><form action= "/adminDelete" method='POST'>
+                      <input type="hidden" value="Routes" name="table">
+                      <input type="hidden" value="route_ID" name="field">
+                      <input type="hidden" value={{this.route_ID}} name="id">
+                      <button type="submit" class="btn btn-outline-dark btn-small">Delete</button></form></td>
+              </tr>
+              {{/each}}
+          </tbody>
+        </table>
+          <center>
+            <button href="#insertRoute" data-toggle="modal" class="btn btn-outline-dark btn-small">Insert</button>
+          </center>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--Insert Route Modal-->
+<div class="modal" id="insertRoute" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Insert Route</h5>
+      </div>
+      <div class="modal-body">
+       <div class="container" width="50%">
+<form id="addRoute" action= "/addRoute" method="POST">
+    <div class="form-group row">
+            <div scope='col'><input type="text" class="form-control" name="name" placeholder="Route Name" size="10" required></div>
+            <div ID="Terrain_Type" class="dropdown">
+              <select name="terrain" class="form-control">
+              {{#each Terrains}}
+                <option value={{terrain_ID}} class="dropdown-item">{{terrain_Type}}</option>
+              {{/each}}
+              </select>
+            </div>
+            <div scope='col'><input type="number" class="form-control" name="miles" placeholder="Miles" size="10" required></div>
+            <div ID="Terrain_Type" class="dropdown">
+              <select name="difficulty" class="form-control">
+                <option value="Easy" class="dropdown-item">Easy</option>
+                <option value="Intermediate" class="dropdown-item">Intermediate</option>
+                <option value="Hard" class="dropdown-item">Hard</option>
+                <option value="Extreme" class="dropdown-item">Extreme</option>
+              </select>
+            </div>
+            <div scope='col'><input type="text" class="form-control" name="location" placeholder="Location" size="10" required></div>
+    </div>
+</form>
+</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button form="addRoute" type="submit" class="btn btn-primary">Insert</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Display Tours Table-->
+  <div id="Tours" class="collapse" data-parent="#accordion">
+    <div class="card-body">
+      <div class="custom-repo">
+        <h2><center>Tours</center></h2>                                           
+      <div class="container" width="100%" >
+        <div class="row">
+        </div>
+        </br>
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">tour_ID</th>
+            <th scope="col">route</th>
+            <th scope="col">rider</th>
+            <th scope="col">Action</th>
+            <th scope="col"></th>
+          </tr>
+          </thead>
+            <tbody>
+              {{#each Tours}}
+              <tr>
+                  <td>{{this.tour_ID}}</td>
+                  <td>{{this.route}}</td>
+                  <td>{{this.rider}}</td>
+                  <!--Update Form-->
+                  <td><button href="#Tours{{this.tour_ID}}" data-toggle="modal" class="btn btn-outline-dark btn-small">Update</button></td>
+                  <div class="modal" id="Tours{{this.tour_ID}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Update Tour</h5>
+                        </div>
+                        <div class="modal-body">
+                        <div class="container" width="50%">
+                  <form id="updateTour{{this.tour_ID}}" action="/update" method="POST">
+                      <div class="form-group row">
+                              <input type="hidden" class="form-control" name="table" readonly="readonly" value="Tours">
+                              <input type="hidden" class="form-control" name="tour_ID" readonly="readonly" value={{this.tour_ID}}>
+                              <div scope='col' >Route ID<input type="number" class="form-control" name="route" value={{this.route}} size="10" ></div>
+                              <div scope='col'>Rider ID<input type="number" class="form-control" name="rider" value={{this.rider}} size="10" ></div>
+                      </div>
+                  </form>
+                  </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button form="updateTour{{this.tour_ID}}" type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--Delete Form-->
+                  <td><form action= "/adminDelete" method='POST'>
+                      <input type="hidden" value="Tours" name="table">
+                      <input type="hidden" value="tour_ID" name="field">
+                      <input type="hidden" value={{this.tour_ID}} name="id">
+                      <button type="submit" class="btn btn-outline-dark btn-small">Delete</button></form></td>
+              </tr>
+              {{/each}}
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!--Display Terrains Table-->
+  <div id="Terrains" class="collapse" data-parent="#accordion">
+    <div class="card-body">
+      <div class="custom-repo">
+        <h2><center>Terrains</center></h2>                                           
+      <div class="container" width="100%" >
+        <div class="row">
+        </div>
+        </br>
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">terrain_ID</th>
+            <th scope="col">terrain_Type</th>
+            <th scope="col">terrain_Description</th>
+            <th scope="col">Action</th>
+            <th scope="col"></th>
+          </tr>
+          </thead>
+             <tbody>
+              {{#each Terrains}}
+              <tr>
+                  <td>{{this.terrain_ID}}</td>
+                  <td>{{this.terrain_Type}}</td>
+                  <td>{{this.terrain_Description}}</td>
+                  <!--Update Form-->
+                  <td><button href="#Terrain{{this.terrain_ID}}" data-toggle="modal" class="btn btn-outline-dark btn-small">Update</button></td>
+                  <div class="modal" id="Terrain{{this.terrain_ID}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Update Terrain</h5>
+                        </div>
+                        <div class="modal-body">
+                        <div class="container" width="50%">
+                  <form id="updateTerrain{{this.terrain_ID}}" action="/update" method="POST">
+                      <div class="form-group row">
+                              <input type="hidden" class="form-control" name="table" readonly="readonly" value="Terrains">
+                              <input type="hidden" class="form-control" name="terrain_ID" readonly="readonly" value={{this.terrain_ID}}>
+                              <div scope='col' >Terrain Type<input type="text" class="form-control" name="terrain_Type" value={{this.terrain_Type}} size="10" ></div>
+                              <div scope='col'>Terrain Description<input type="text" class="form-control" name="terrain_Description" value={{this.terrain_Description}} size="10" ></div>
+                      </div>
+                  </form>
+                  </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button form="updateTerrain{{this.terrain_ID}}" type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--Delete Form-->
+                  <td><form action= "/adminDelete" method='POST'>
+                      <input type="hidden" value="Terrains" name="table">
+                      <input type="hidden" value="terrain_ID" name="field">
+                      <input type="hidden" value={{this.terrain_ID}} name="id">
+                      <button type="submit" class="btn btn-outline-dark btn-small">Delete</button></form></td>
+              </tr>
+              {{/each}}
+          </tbody>
+        </table>
+          <center>
+            <button href="#insertTerrain" data-toggle="modal" class="btn btn-outline-dark btn-small">Insert</button>
+          </center>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Insert Terrain Modal-->
+<div class="modal" id="insertTerrain" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Insert Rider</h5>
+      </div>
+      <div class="modal-body">
+       <div class="container" width="50%">
+<form id="addTerrain" action= "/addTerrain" method="POST">
+    <div class="form-group row">
+            <div scope='col'><input type="text" class="form-control" name="terrain_Type" placeholder="Terrain Type" size="10" required></div>
+            <div scope='col'><input type="text" class="form-control" name="terrain_Description" placeholder="Terrain Description" size="10" required></div>
+    </div>
+</form>
+</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button form="addTerrain" type="submit" class="btn btn-primary">Insert</button>
+      </div>
+    </div>
+  </div>
+</div>

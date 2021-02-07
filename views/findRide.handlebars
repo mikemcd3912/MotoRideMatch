@@ -1,0 +1,46 @@
+<h4><center>This is where users can discover new routes to ride</center></h4>
+</br>
+
+<!--Riders Table-->
+<div class="container" width="50%">
+<h2><center>Find A Route To Ride </center></h2>                                           
+<div ID="Terrain_Type" class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Terrain Type
+  </button>
+  <div id="Terrain_Type" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+     {{#each terrain_Type}}
+    <form action= "/findRide&{{this.terrain_Type}}" method="GET">
+      <button type="submit" class="dropdown-item">{{this.terrain_Type}}</button>
+    </form>
+    {{/each}}
+  </div>
+  
+</div>
+  </br>
+  <span class="border border-light">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Route Name</th>
+        <th scope="col">Terrain</th>
+        <th scope="col">Location</th>
+        <th scope="col">Difficulty</th>
+        <th scope="col">Miles</th>
+      </tr>
+    </thead>
+          <tbody>
+         {{#each Routes}}
+              <tr>
+                  <td value="{{id}}">{{this.route_Name}}</td>
+                  <td value="{{id}}">{{this.terrain_Description}}</td>
+                  <td value="{{id}}">{{this.location}}</td>
+                  <td value="{{id}}">{{this.difficulty}}</td>
+                  <td value="{{id}}">{{this.miles}}</td>
+              </tr>
+              {{/each}}
+          </tbody>
+  </table>
+  </span>
+</form>
+</div>

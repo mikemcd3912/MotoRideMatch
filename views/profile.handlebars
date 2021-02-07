@@ -1,0 +1,186 @@
+<h4><center>This is the profile for the user where they can see the bikes they have saved and the tours they have completed</center></h4>
+</br>
+
+<!--Riders Table-->
+<h2><center>{{{rider.user_Name}}}'s Bikes</center></h2>     
+<div class="container" width="50%" >
+  <a href="/logout"><h6 style="text-align:right;">Logout</h6></a></br>
+  <div class="row">
+  </div>
+  </br>
+  <span class="border border-light">
+  <form action="submit" method="POST"></form>
+    <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">make</th>
+            <th scope="col">model</th>
+            <th scope="col">year</th>
+            <th scope="col">Action</th>
+            <th scope="col"></th>
+          </tr>
+          </thead>
+           <tbody>
+              {{#Bikes}}
+              <tr>
+                  <td>{{this.make}}</td>
+                  <td>{{this.model}}</td>
+                  <td>{{this.year}}</td>
+                     <!--Update Form-->
+                  <td><button href="#Bikes{{this.bike_ID}}" data-toggle="modal" class="btn btn-outline-dark btn-small">Update</button></td>
+                  <div class="modal" id="Bikes{{this.bike_ID}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Update Bike</h5>
+                        </div>
+                        <div class="modal-body">
+                        <div class="container" width="50%">
+                  <form id="updateBike{{this.bike_ID}}" action="/update" method="POST">
+                      <div class="form-group row">
+                              <input type="hidden" class="form-control" name="table" readonly="readonly" value="Bikes">
+                              <input type="hidden" class="form-control" name="id" readonly="readonly" value={{this.bike_ID}}>
+                              <div scope='col' >Make<input type="text" class="form-control" name="make" value={{this.make}} size="10" ></div>
+                              <div scope='col'>Model<input type="text" class="form-control" name="model" value={{this.model}} size="10" ></div>
+                              <div scope='col'>Year<input type="number" class="form-control" name="year" value={{this.year}} size="10" ></div>
+                      </div>
+                  </form>
+                  </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button form="updateBike{{this.bike_ID}}" type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--Delete Form-->
+                  <td><form action= "/delete" method='POST'>
+                      <input type="hidden" value="Bikes" name="table">
+                      <input type="hidden" value="bike_ID" name="field">
+                      <input type="hidden" value={{this.bike_ID}} name="id">
+                      <button type="submit" class="btn btn-outline-dark btn-small">Delete</button></form></td>
+              </tr>
+              {{/Bikes}}
+          </tbody>
+        </table>
+        </table>
+          <center>
+            <button href="#insertBike" data-toggle="modal" class="btn btn-outline-dark btn-small">Add bike</button>
+          </center>
+  </form>
+  </span>
+</div>
+
+
+<!--Insert Bike Modal-->
+<div class="modal" id="insertBike" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Insert Bike</h5>
+      </div>
+      <div class="modal-body">
+       <div class="container" width="50%">
+<form id="addBike" action= "/addBike" method="POST">
+    <div class="form-group row">
+            <div scope='col'><input type="text" class="form-control" name="make" placeholder="Make" size="10" required></div>
+            <div scope='col'><input type="text" class="form-control" name="model" placeholder="Model" size="10" required></div>
+            <div scope='col'><input type="number" class="form-control" name="year" placeholder="Year" size="10" required></div>
+    </div>
+</form>
+</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button form="addBike" type="submit" class="btn btn-primary">Insert</button>
+      </div>
+    </div>
+  </div>
+</div>
+</br></br>
+
+
+<!--Tours Table-->
+<h2><center>My Completed Rides</center></h2>
+<div class="container" width="50%" >                                          
+  <span class="border border-light">
+  <form action="submit" method="POST"></form>
+    <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Terrain</th>
+            <th scope="col">Miles</th>
+            <th scope="col">Difficulty</th>
+          
+            <th scope="col">Action</th>
+            <th scope="col"></th>
+          </tr>
+          </thead>
+           <tbody>
+              {{#each Tours}}
+              <tr>
+                  <td>{{this.route_Name}}</td>
+                  <td>{{this.terrain_Type}}</td>
+                  <td>{{this.miles}}</td>
+                  <td>{{this.difficulty}}</td>
+
+                  <!--Delete Form-->
+                  <td><form action= "/delete" method='POST'>
+                      <input type="hidden" value="Tours" name="table">
+                      <input type="hidden" value="tour_ID" name="field">
+                      <input type="hidden" value={{this.tour_ID}} name="id">
+                      <button type="submit" class="btn btn-outline-dark btn-small">Delete</button></form></td>
+              </tr>
+              {{/each}}
+          </tbody>
+        </table>
+          <center>
+            <button href="#insertRoute" data-toggle="modal" class="btn btn-outline-dark btn-small">Add Route</button>
+          </center>
+  </form>
+  </span>
+</div>
+
+<!--Insert Route Modal-->
+<div class="modal" id="insertRoute" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Insert Route</h5>
+      </div>
+      <div class="modal-body">
+       <div class="container" width="50%">
+<form id="addRoute" action= "/addRoute" method="POST">
+    <div class="form-group row">
+            <div scope='col'><input type="text" class="form-control" name="name" placeholder="Route Name" size="10" required></div>
+            <div ID="Terrain_Type" class="dropdown">
+              <select name="terrain" class="form-control">
+              {{#each Terrains}}
+                <option value={{terrain_ID}} class="dropdown-item">{{terrain_Type}}</option>
+              {{/each}}
+              </select>
+            </div>
+            <div scope='col'><input type="number" class="form-control" name="miles" placeholder="Miles" size="10" required></div>
+            <div ID="Terrain_Type" class="dropdown">
+              <select name="difficulty" class="form-control">
+                <option value="Easy" class="dropdown-item">Easy</option>
+                <option value="Intermediate" class="dropdown-item">Intermediate</option>
+                <option value="Hard" class="dropdown-item">Hard</option>
+                <option value="Extreme" class="dropdown-item">Extreme</option>
+              </select>
+            </div>
+            <div scope='col'><input type="text" class="form-control" name="location" placeholder="Location" size="10" required></div>
+    </div>
+</form>
+</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button form="addRoute" type="submit" class="btn btn-primary">Insert</button>
+      </div>
+    </div>
+  </div>
+</div>
+</br></br>
